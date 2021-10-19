@@ -1,5 +1,6 @@
 import { MainContainer, Title } from "../../styles/commonStyles";
 import { TitleContainer, ButtonsContainer, Button } from "./homePageStyle";
+import { Link } from "react-router-dom";
 import MoneyLedger from "../moneyLedger/moneyLedger";
 import exitIcon from "../../assets/exitIcon.png";
 import plusIcon from "../../assets/plusIcon.png";
@@ -14,24 +15,28 @@ export default function HomePage() {
             </TitleContainer>
             <MoneyLedger />
             <ButtonsContainer>
-                <Button>
-                    <div>
-                        <img src={plusIcon} alt="" />
-                        <span>
-                            Nova <br />
-                            entrada
-                        </span>
-                    </div>
-                </Button>
-                <Button>
-                    <div>
-                        <img src={minusIcon} alt="" />
-                        <span>
-                            Nova <br />
-                            saída
-                        </span>
-                    </div>
-                </Button>
+                <Link to="/deposit">
+                    <Button>
+                        <div>
+                            <img src={plusIcon} alt="" />
+                            <span>
+                                Nova <br />
+                                entrada
+                            </span>
+                        </div>
+                    </Button>
+                </Link>
+                <Link to="/withdrawal">
+                    <Button>
+                        <div>
+                            <img src={minusIcon} alt="" />
+                            <span>
+                                Nova <br />
+                                saída
+                            </span>
+                        </div>
+                    </Button>
+                </Link>
             </ButtonsContainer>
         </MainContainer>
     );
