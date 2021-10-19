@@ -8,8 +8,14 @@ const Ledger = styled.div`
     margin-top: 22px;
     margin-bottom: 13px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: ${({ entries }) => (entries ? "none" : "center")};
     align-items: center;
+    padding: 23px 11px 10px 12px;
+`;
+
+const LedgerDetails = styled.div`
+    width: 100%;
 `;
 
 const NoRecords = styled.span`
@@ -19,4 +25,4 @@ const NoRecords = styled.span`
     text-align: center;
 `;
 
-export { Ledger, NoRecords };
+export { Ledger, LedgerDetails, NoRecords };
