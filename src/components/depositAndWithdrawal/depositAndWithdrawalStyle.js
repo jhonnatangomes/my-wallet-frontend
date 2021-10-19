@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const InputContainer = styled.div`
+const Form = styled.form`
     margin-top: 40px;
 
     input {
@@ -35,4 +35,4 @@ const Button = styled.button`
     cursor: pointer;
 `;
 
-export { InputContainer, Input, Button };
+export { Form, Input, Button };
