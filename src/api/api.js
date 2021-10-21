@@ -6,10 +6,14 @@ function getEntries(config) {
     return axios.get(`${URL_API}/entries`, config);
 }
 
+function getFunds(config) {
+    return axios.get(`${URL_API}/entries/funds`, config);
+}
+
 function postEntry(body) {
     return axios
         .post(`${URL_API}/entries`, body)
         .catch((err) => console.log(err.response));
 }
 
-export { getEntries, postEntry };
+export { getEntries, getFunds, postEntry };
