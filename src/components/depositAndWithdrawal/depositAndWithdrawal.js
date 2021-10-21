@@ -1,18 +1,23 @@
 import { useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useHistory } from "react-router";
 import { MainContainer, Title } from "../../styles/commonStyles";
 import { Form, Input, Button } from "./depositAndWithdrawalStyle";
 import { postEntry } from "../../api/api";
 
-export default function DepositAndWithdrawal() {
+export default function DepositAndWithdrawal({ userId }) {
     const path = useLocation().pathname;
+    const history = useHistory();
     const [value, setValue] = useState("");
     const [description, setDescription] = useState("");
     const [decimalPlace, setDecimalPlace] = useState("");
 
     function handleSubmit(e) {
         e.preventDefault();
-        const body = { value, description };
+        const body = {
+            userId,
+            description,
+            value: path === "/withdrawal" ? "-" + value : value,
+        };
         if (value.includes(",")) {
             if (!decimalPlace) {
                 body.value = Number(value.replace(",", "") + "00");
@@ -24,7 +29,13 @@ export default function DepositAndWithdrawal() {
         } else {
             body.value *= 100;
         }
-        postEntry(body);
+        const promise = postEntry(body);
+        promise.then(() => {
+            path === "/deposit"
+                ? alert("Entrada registrada com sucesso")
+                : alert("Saída registrada com sucesso");
+            history.push("/");
+        });
     }
 
     function handleValue(e) {

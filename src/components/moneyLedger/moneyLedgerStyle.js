@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Ledger = styled.div`
     width: 100%;
-    min-height: 446px;
+    height: 446px;
     background-color: white;
     border-radius: 5px;
     margin-top: 22px;
@@ -12,10 +12,7 @@ const Ledger = styled.div`
     justify-content: ${({ entries }) => (entries ? "none" : "center")};
     align-items: center;
     padding: 23px 11px 10px 12px;
-`;
-
-const LedgerDetails = styled.div`
-    width: 100%;
+    position: relative;
 `;
 
 const NoRecords = styled.span`
@@ -25,4 +22,30 @@ const NoRecords = styled.span`
     text-align: center;
 `;
 
-export { Ledger, LedgerDetails, NoRecords };
+const LineContainer = styled.div`
+    width: 100%;
+    height: 380px;
+    overflow: auto;
+`;
+
+const FundsStyle = styled.div`
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+    padding: 0px 11px 0px 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+    line-height: 19.96px;
+
+    & span:first-child {
+        font-weight: bold;
+    }
+
+    & span:last-child {
+        color: ${({ positive }) => (positive ? "#03ac00" : "#c70000")};
+    }
+`;
+
+export { Ledger, NoRecords, LineContainer, FundsStyle };

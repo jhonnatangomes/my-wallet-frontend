@@ -6,14 +6,14 @@ import exitIcon from "../../assets/exitIcon.png";
 import plusIcon from "../../assets/plusIcon.png";
 import minusIcon from "../../assets/minusIcon.png";
 
-export default function HomePage() {
+export default function HomePage({ userId }) {
     return (
         <MainContainer>
             <TitleContainer>
                 <Title>Olá, fulano</Title>
                 <img src={exitIcon} alt="" />
             </TitleContainer>
-            <MoneyLedger />
+            <MoneyLedger userId={userId} />
             <ButtonsContainer>
                 <Link to="/deposit">
                     <Button>

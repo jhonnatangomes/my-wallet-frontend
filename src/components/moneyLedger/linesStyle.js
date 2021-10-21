@@ -1,17 +1,12 @@
 import styled from "styled-components";
 
-const LineContainer = styled.div`
+const Line = styled.div`
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: space-between;
     font-size: 16px;
     line-height: 18.78px;
     margin-bottom: 20px;
-
-    & > span:last-child {
-        color: #03ac00;
-    }
 `;
 
 const DateAndDescription = styled.div`
@@ -21,4 +16,8 @@ const DateAndDescription = styled.div`
     }
 `;
 
-export { LineContainer, DateAndDescription };
+const Value = styled.span`
+    color: ${({ positive }) => (positive ? "#03ac00" : "#c70000")};
+`;
+
+export { Line, DateAndDescription, Value };

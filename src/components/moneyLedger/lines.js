@@ -1,14 +1,18 @@
-import { LineContainer, DateAndDescription } from "./linesStyle";
+import { Line, DateAndDescription, Value } from "./linesStyle";
+import dayjs from "dayjs";
 
 export default function Lines({ entries }) {
     const { date, description, value } = entries;
+    const valueString = value.toString().replace("-", "");
     return (
-        <LineContainer>
+        <Line>
             <DateAndDescription>
-                <span>{date}</span>
+                <span>{dayjs(date).format("DD/MM")}</span>
                 <span>{description}</span>
             </DateAndDescription>
-            <span>{value.slice(0, -2) + "," + value.slice(-2)}</span>
-        </LineContainer>
+            <Value positive={value > 0}>
+                {valueString.slice(0, -2) + "," + valueString.slice(-2)}
+            </Value>
+        </Line>
     );
 }

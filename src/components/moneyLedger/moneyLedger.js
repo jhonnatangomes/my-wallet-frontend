@@ -1,25 +1,34 @@
-import { Ledger, LedgerDetails, NoRecords } from "./moneyLedgerStyle";
+import { Ledger, LineContainer, NoRecords } from "./moneyLedgerStyle";
+import Funds from "./funds";
+import { useState, useEffect } from "react";
+import { getEntries } from "../../api/api";
 import Lines from "./lines";
 
-export default function MoneyLedger() {
-    const entries = [
-        {
-            date: "20/11",
-            description: "Empréstimo Maria",
-            value: "50000",
-        },
-        {
-            date: "15/11",
-            description: "Salário",
-            value: "300000",
-        },
-    ];
+export default function MoneyLedger({ userId }) {
+    const [entries, setEntries] = useState([]);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                userId,
+            },
+        };
+        const promise = getEntries(config);
+        promise.then((res) => {
+            setEntries(res.data);
+        });
+    }, []);
+
     return (
         <Ledger entries={entries.length}>
             {entries.length ? (
                 <>
-                    <Lines entries={entries[0]} />
-                    <Lines entries={entries[1]} />
+                    <LineContainer>
+                        {entries.map((entry, i) => (
+                            <Lines key={i} entries={entry} />
+                        ))}
+                    </LineContainer>
+                    {entries.length ? <Funds total={entries[0].sum} /> : ""}
                 </>
             ) : (
                 <NoRecords>
