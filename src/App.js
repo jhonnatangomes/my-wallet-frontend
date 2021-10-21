@@ -1,7 +1,8 @@
 import GlobalStyle from "./styles/globalStyles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import HomePage from "./components/homePage/homePage";
 import { useState } from "react";
+import HomePage from "./components/homePage/homePage";
+import Login from "./components/login/login";
 import DepositAndWithdrawal from "./components/depositAndWithdrawal/depositAndWithdrawal";
 
 export default function App() {
@@ -13,6 +14,12 @@ export default function App() {
                 <Switch>
                     <Route path="/" exact>
                         <HomePage userId={userId} />
+                    </Route>
+                    <Route path="/sign-in" exact>
+                        <Login />
+                    </Route>
+                    <Route path="/sign-up" exact>
+                        <Login />
                     </Route>
                     <Route path="/deposit" exact>
                         <DepositAndWithdrawal userId={userId} />

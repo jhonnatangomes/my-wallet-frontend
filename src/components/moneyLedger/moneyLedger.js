@@ -20,7 +20,7 @@ export default function MoneyLedger({ userId }) {
             setEntries(res.data);
         });
         fundsRequest.then((res) => {
-            setFunds(res.data.sum);
+            setFunds(res.data);
         });
     }, []);
 

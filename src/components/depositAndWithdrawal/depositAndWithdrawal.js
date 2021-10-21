@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useLocation, useHistory } from "react-router";
 import { MainContainer, Title } from "../../styles/commonStyles";
-import { Form, Input, Button } from "./depositAndWithdrawalStyle";
+import { Form } from "./depositAndWithdrawalStyle";
+import { Input, Button } from "../../styles/commonStyles";
 import { postEntry } from "../../api/api";
 
 export default function DepositAndWithdrawal({ userId }) {

@@ -8,7 +8,6 @@ const TitleContainer = styled.div`
     img {
         width: 23px;
         height: 24px;
-        cursor: pointer;
     }
 `;
 
