@@ -1,13 +1,20 @@
 import { MainContainer, Title } from "../../styles/commonStyles";
 import { TitleContainer, ButtonsContainer, Button } from "./homePageStyle";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import MoneyLedger from "../moneyLedger/moneyLedger";
 import exitIcon from "../../assets/exitIcon.png";
 import plusIcon from "../../assets/plusIcon.png";
 import minusIcon from "../../assets/minusIcon.png";
 
-export default function HomePage({ user }) {
-    console.log(user);
+export default function HomePage() {
+    const history = useHistory();
+    if (!localStorage.user) {
+        history.push("/sign-in");
+        return null;
+    }
+    const user = JSON.parse(localStorage.getItem("user"));
+
     return (
         <MainContainer>
             <TitleContainer>

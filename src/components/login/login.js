@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Ellipsis } from "react-spinners-css";
 import { signUp, signIn } from "../../api/api";
 
-export default function Login({ setUser }) {
+export default function Login() {
     const path = useLocation().pathname;
     const history = useHistory();
     const [inputs, setInputs] = useState({});
@@ -41,8 +41,8 @@ export default function Login({ setUser }) {
             const promise = signIn(body);
             promise
                 .then((res) => {
-                    setUser(res.data);
                     setIsLoading(false);
+                    localStorage.setItem("user", JSON.stringify(res.data));
                     history.push("/");
                 })
                 .catch((err) => handleError(err));

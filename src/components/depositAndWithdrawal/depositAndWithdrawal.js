@@ -5,12 +5,18 @@ import { Form } from "./depositAndWithdrawalStyle";
 import { Input, Button } from "../../styles/commonStyles";
 import { postEntry } from "../../api/api";
 
-export default function DepositAndWithdrawal({ user }) {
+export default function DepositAndWithdrawal() {
     const path = useLocation().pathname;
     const history = useHistory();
     const [value, setValue] = useState("");
     const [description, setDescription] = useState("");
     const [decimalPlace, setDecimalPlace] = useState("");
+
+    if (!localStorage.user) {
+        history.push("/sign-in");
+        return null;
+    }
+    const user = JSON.parse(localStorage.getItem("user"));
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -23,13 +29,13 @@ export default function DepositAndWithdrawal({ user }) {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        if (value.includes(",")) {
+        if (body.value.includes(",")) {
             if (!decimalPlace) {
-                body.value = Number(value.replace(",", "") + "00");
+                body.value = Number(body.value.replace(",", "") + "00");
             } else if (decimalPlace && decimalPlace.length === 1) {
-                body.value = Number(value.replace(",", "") + "0");
+                body.value = Number(body.value.replace(",", "") + "0");
             } else {
-                body.value = Number(value.replace(",", ""));
+                body.value = Number(body.value.replace(",", ""));
             }
         } else {
             body.value *= 100;
