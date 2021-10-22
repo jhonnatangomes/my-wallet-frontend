@@ -21,7 +21,6 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
         promise
             .then(() => setIsAuthenticated(true))
             .catch(() => {
-                alert("Usuário não autenticado");
                 history.push("/sign-in");
                 return null;
             });
