@@ -5,7 +5,7 @@ import { Form } from "./depositAndWithdrawalStyle";
 import { Input, Button } from "../../styles/commonStyles";
 import { postEntry } from "../../api/api";
 
-export default function DepositAndWithdrawal({ userId }) {
+export default function DepositAndWithdrawal({ user }) {
     const path = useLocation().pathname;
     const history = useHistory();
     const [value, setValue] = useState("");
@@ -15,9 +15,13 @@ export default function DepositAndWithdrawal({ userId }) {
     function handleSubmit(e) {
         e.preventDefault();
         const body = {
-            userId,
             description,
             value: path === "/withdrawal" ? "-" + value : value,
+        };
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
         };
         if (value.includes(",")) {
             if (!decimalPlace) {
@@ -30,13 +34,15 @@ export default function DepositAndWithdrawal({ userId }) {
         } else {
             body.value *= 100;
         }
-        const promise = postEntry(body);
-        promise.then(() => {
-            path === "/deposit"
-                ? alert("Entrada registrada com sucesso")
-                : alert("Saída registrada com sucesso");
-            history.push("/");
-        });
+        const promise = postEntry(body, config);
+        promise
+            .then(() => {
+                path === "/deposit"
+                    ? alert("Entrada registrada com sucesso")
+                    : alert("Saída registrada com sucesso");
+                history.push("/");
+            })
+            .catch((err) => console.log(err));
     }
 
     function handleValue(e) {

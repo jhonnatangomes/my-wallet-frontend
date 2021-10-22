@@ -6,26 +6,26 @@ import Login from "./components/login/login";
 import DepositAndWithdrawal from "./components/depositAndWithdrawal/depositAndWithdrawal";
 
 export default function App() {
-    const [userId, setUserId] = useState(1);
+    const [user, setUser] = useState({});
     return (
         <>
             <Router>
                 <GlobalStyle />
                 <Switch>
                     <Route path="/" exact>
-                        <HomePage userId={userId} />
+                        <HomePage user={user} />
                     </Route>
                     <Route path="/sign-in" exact>
-                        <Login />
+                        <Login setUser={setUser} />
                     </Route>
                     <Route path="/sign-up" exact>
                         <Login />
                     </Route>
                     <Route path="/deposit" exact>
-                        <DepositAndWithdrawal userId={userId} />
+                        <DepositAndWithdrawal user={user} />
                     </Route>
                     <Route path="/withdrawal" exact>
-                        <DepositAndWithdrawal userId={userId} />
+                        <DepositAndWithdrawal user={user} />
                     </Route>
                 </Switch>
             </Router>

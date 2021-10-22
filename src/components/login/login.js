@@ -1,12 +1,16 @@
-import { useLocation } from "react-router";
+import { useLocation, useHistory } from "react-router";
 import { useState } from "react";
 import { LoginContainer, Title, Form, Span } from "./loginStyle";
 import { Input, Button } from "../../styles/commonStyles";
 import { Link } from "react-router-dom";
+import { Ellipsis } from "react-spinners-css";
+import { signUp, signIn } from "../../api/api";
 
-export default function Login() {
+export default function Login({ setUser }) {
     const path = useLocation().pathname;
+    const history = useHistory();
     const [inputs, setInputs] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -17,9 +21,47 @@ export default function Login() {
                 password: inputs.password,
                 repeatPassword: inputs.repeatPassword,
             };
-            console.log(body);
+            setIsLoading(true);
+            const promise = signUp(body);
+            promise
+                .then(() => {
+                    alert("Usuário cadastrado com sucesso");
+                    setIsLoading(false);
+                    history.push("/sign-in");
+                })
+                .catch((err) => {
+                    handleError(err);
+                });
+        } else {
+            const body = {
+                email: inputs.email,
+                password: inputs.password,
+            };
+            setIsLoading(true);
+            const promise = signIn(body);
+            promise
+                .then((res) => {
+                    setUser(res.data);
+                    setIsLoading(false);
+                    history.push("/");
+                })
+                .catch((err) => handleError(err));
         }
     }
+
+    function handleError(err) {
+        if (
+            err.response.status === 400 ||
+            err.response.status === 401 ||
+            err.response.status === 409
+        ) {
+            alert(err.response.data);
+        } else {
+            alert("Algo inesperado aconteceu");
+        }
+        setIsLoading(false);
+    }
+
     return (
         <LoginContainer>
             <Title path={path}>MyWallet</Title>
@@ -31,6 +73,7 @@ export default function Login() {
                         onChange={(e) =>
                             setInputs({ ...inputs, name: e.target.value })
                         }
+                        disabled={isLoading}
                         required
                     />
                 ) : (
@@ -43,6 +86,7 @@ export default function Login() {
                     onChange={(e) =>
                         setInputs({ ...inputs, email: e.target.value })
                     }
+                    disabled={isLoading}
                     required
                 />
                 <Input
@@ -52,6 +96,7 @@ export default function Login() {
                     onChange={(e) =>
                         setInputs({ ...inputs, password: e.target.value })
                     }
+                    disabled={isLoading}
                     required
                 />
                 {path === "/sign-up" ? (
@@ -65,13 +110,20 @@ export default function Login() {
                                 repeatPassword: e.target.value,
                             })
                         }
+                        disabled={isLoading}
                         required
                     />
                 ) : (
                     ""
                 )}
                 <Button type="submit">
-                    {path === "/sign-in" ? "Entrar" : "Cadastrar"}
+                    {isLoading ? (
+                        <Ellipsis color="white" />
+                    ) : path === "/sign-in" ? (
+                        "Entrar"
+                    ) : (
+                        "Cadastrar"
+                    )}
                 </Button>
             </Form>
             <Span path={path}>

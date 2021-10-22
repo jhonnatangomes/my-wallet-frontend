@@ -35,6 +35,9 @@ const Button = styled.button`
     font-size: 20px;
     line-height: 23.48px;
     font-family: "Raleway", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export { Title, MainContainer, Input, Button };

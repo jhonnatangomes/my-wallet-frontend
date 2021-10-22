@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { getEntries, getFunds } from "../../api/api";
 import Lines from "./lines";
 
-export default function MoneyLedger({ userId }) {
+export default function MoneyLedger({ user }) {
     const [entries, setEntries] = useState([]);
     const [funds, setFunds] = useState("");
 
     useEffect(() => {
         const config = {
             headers: {
-                userId,
+                Authorization: `Bearer ${user.token}`,
             },
         };
         const entriesRequest = getEntries(config);
@@ -20,7 +20,7 @@ export default function MoneyLedger({ userId }) {
             setEntries(res.data);
         });
         fundsRequest.then((res) => {
-            setFunds(res.data);
+            setFunds(res.data.sum);
         });
     }, []);
 
