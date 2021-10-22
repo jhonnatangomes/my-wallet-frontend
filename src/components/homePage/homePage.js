@@ -10,10 +10,6 @@ import { logout } from "../../api/api";
 
 export default function HomePage() {
     const history = useHistory();
-    if (!localStorage.user) {
-        history.push("/sign-in");
-        return null;
-    }
     const user = JSON.parse(localStorage.getItem("user"));
 
     function handleLogout() {

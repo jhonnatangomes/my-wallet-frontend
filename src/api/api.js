@@ -14,6 +14,10 @@ function logout(config) {
     return axios.post(`${URL_API}/logout`, {}, config);
 }
 
+function checkUser(config) {
+    return axios.post(`${URL_API}/user`, {}, config);
+}
+
 function getEntries(config) {
     return axios.get(`${URL_API}/entries`, config);
 }
@@ -26,4 +30,4 @@ function postEntry(body, config) {
     return axios.post(`${URL_API}/entries`, body, config);
 }
 
-export { signUp, signIn, logout, getEntries, getFunds, postEntry };
+export { signUp, signIn, logout, checkUser, getEntries, getFunds, postEntry };

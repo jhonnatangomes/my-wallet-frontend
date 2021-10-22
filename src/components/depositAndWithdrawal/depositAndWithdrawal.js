@@ -11,11 +11,6 @@ export default function DepositAndWithdrawal() {
     const [value, setValue] = useState("");
     const [description, setDescription] = useState("");
     const [decimalPlace, setDecimalPlace] = useState("");
-
-    if (!localStorage.user) {
-        history.push("/sign-in");
-        return null;
-    }
     const user = JSON.parse(localStorage.getItem("user"));
 
     function handleSubmit(e) {
