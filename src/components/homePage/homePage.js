@@ -6,6 +6,7 @@ import MoneyLedger from "../moneyLedger/moneyLedger";
 import exitIcon from "../../assets/exitIcon.png";
 import plusIcon from "../../assets/plusIcon.png";
 import minusIcon from "../../assets/minusIcon.png";
+import { logout } from "../../api/api";
 
 export default function HomePage() {
     const history = useHistory();
@@ -15,11 +16,28 @@ export default function HomePage() {
     }
     const user = JSON.parse(localStorage.getItem("user"));
 
+    function handleLogout() {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        const promise = logout(config);
+        promise
+            .then(() => {
+                localStorage.removeItem("user");
+                history.push("/sign-in");
+            })
+            .catch((err) => {
+                alert(err.response.data);
+            });
+    }
+
     return (
         <MainContainer>
             <TitleContainer>
                 <Title>Olá, {user.name}</Title>
-                <img src={exitIcon} alt="" />
+                <img onClick={handleLogout} src={exitIcon} alt="" />
             </TitleContainer>
             <MoneyLedger user={user} />
             <ButtonsContainer>

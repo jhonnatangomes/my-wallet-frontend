@@ -10,6 +10,10 @@ function signIn(body) {
     return axios.post(`${URL_API}/sign-in`, body);
 }
 
+function logout(config) {
+    return axios.post(`${URL_API}/logout`, {}, config);
+}
+
 function getEntries(config) {
     return axios.get(`${URL_API}/entries`, config);
 }
@@ -22,4 +26,4 @@ function postEntry(body, config) {
     return axios.post(`${URL_API}/entries`, body, config);
 }
 
-export { signUp, signIn, getEntries, getFunds, postEntry };
+export { signUp, signIn, logout, getEntries, getFunds, postEntry };
