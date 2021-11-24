@@ -1,12 +1,12 @@
-import { Ledger, LineContainer, NoRecords } from "./moneyLedgerStyle";
-import Funds from "./funds";
-import { useState, useEffect } from "react";
-import { getEntries, getFunds } from "../../api/api";
-import Lines from "./lines";
+import { Ledger, LineContainer, NoRecords } from './moneyLedgerStyle';
+import Funds from './funds';
+import { useState, useEffect } from 'react';
+import { getEntries, getFunds } from '../../api/api';
+import Lines from './lines';
 
 export default function MoneyLedger({ user }) {
     const [entries, setEntries] = useState([]);
-    const [funds, setFunds] = useState("");
+    const [funds, setFunds] = useState('');
 
     useEffect(() => {
         const config = {
@@ -33,7 +33,7 @@ export default function MoneyLedger({ user }) {
                             <Lines key={i} entries={entry} />
                         ))}
                     </LineContainer>
-                    {funds ? <Funds total={funds} /> : ""}
+                    {funds ? <Funds total={funds} /> : ''}
                 </>
             ) : (
                 <NoRecords>

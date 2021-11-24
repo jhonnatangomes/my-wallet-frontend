@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const LoginContainer = styled.div`
     display: flex;
@@ -9,12 +9,12 @@ const LoginContainer = styled.div`
 `;
 
 const Title = styled.span`
-    font-family: "Saira Stencil One", cursive;
+    font-family: 'Saira Stencil One', cursive;
     font-size: 32px;
     line-height: 50.37px;
     color: white;
     text-align: center;
-    margin-bottom: ${({ path }) => (path === "/sign-in" ? "24px" : "28px")};
+    margin-bottom: ${({ path }) => (path === '/sign-in' ? '24px' : '28px')};
 `;
 
 const Form = styled.form`
@@ -29,7 +29,7 @@ const Span = styled.span`
     line-height: 17.61px;
     color: white;
     text-align: center;
-    margin-top: ${({ path }) => (path === "/sign-in" ? "36px" : "32px")};
+    margin-top: ${({ path }) => (path === '/sign-in' ? '36px' : '32px')};
 
     a {
         text-decoration: none;

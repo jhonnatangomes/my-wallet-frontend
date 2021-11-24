@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Line = styled.div`
     width: 100%;
@@ -17,7 +17,7 @@ const DateAndDescription = styled.div`
 `;
 
 const Value = styled.span`
-    color: ${({ positive }) => (positive ? "#03ac00" : "#c70000")};
+    color: ${({ positive }) => (positive ? '#03ac00' : '#c70000')};
 `;
 
 export { Line, DateAndDescription, Value };

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const MainContainer = styled.div`
     padding: 25px 25px 16px 25px;
@@ -19,7 +19,7 @@ const Input = styled.input`
     border: none;
     background-color: white;
     padding-left: 15px;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 20px;
     line-height: 23.48px;
 `;
@@ -34,7 +34,7 @@ const Button = styled.button`
     font-weight: bold;
     font-size: 20px;
     line-height: 23.48px;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;

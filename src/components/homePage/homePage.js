@@ -1,16 +1,18 @@
-import { MainContainer, Title } from "../../styles/commonStyles";
-import { TitleContainer, ButtonsContainer, Button } from "./homePageStyle";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
-import MoneyLedger from "../moneyLedger/moneyLedger";
-import exitIcon from "../../assets/exitIcon.png";
-import plusIcon from "../../assets/plusIcon.png";
-import minusIcon from "../../assets/minusIcon.png";
-import { logout } from "../../api/api";
+import { MainContainer, Title } from '../../styles/commonStyles';
+import { TitleContainer, ButtonsContainer, Button } from './homePageStyle';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import MoneyLedger from '../moneyLedger/moneyLedger';
+import exitIcon from '../../assets/exitIcon.png';
+import plusIcon from '../../assets/plusIcon.png';
+import minusIcon from '../../assets/minusIcon.png';
+import { logout } from '../../api/api';
+import { useContext } from 'react';
+import UserContext from '../../contexts/userContext';
 
 export default function HomePage() {
     const history = useHistory();
-    const user = JSON.parse(localStorage.getItem("user"));
+    const { user, setUser } = useContext(UserContext);
 
     function handleLogout() {
         const config = {
@@ -21,8 +23,9 @@ export default function HomePage() {
         const promise = logout(config);
         promise
             .then(() => {
-                localStorage.removeItem("user");
-                history.push("/sign-in");
+                localStorage.removeItem('mywallet-user');
+                setUser(null);
+                history.push('/sign-in');
             })
             .catch((err) => {
                 alert(err.response.data);
