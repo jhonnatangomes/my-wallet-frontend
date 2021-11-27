@@ -1,8 +1,8 @@
 import { Ledger, LineContainer, NoRecords } from './moneyLedgerStyle';
 import Funds from './funds';
 import { useState, useEffect } from 'react';
-import { getEntries, getFunds } from '../../api/api';
-import Lines from './lines';
+import { getEntries } from '../../api/api';
+import Line from './line';
 
 export default function MoneyLedger({ user }) {
     const [entries, setEntries] = useState([]);
@@ -14,12 +14,9 @@ export default function MoneyLedger({ user }) {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        const entriesRequest = getEntries(config);
-        const fundsRequest = getFunds(config);
-        entriesRequest.then((res) => {
-            setEntries(res.data);
-        });
-        fundsRequest.then((res) => {
+        const request = getEntries(config);
+        request.then((res) => {
+            setEntries(res.data.entries);
             setFunds(res.data.sum);
         });
     }, []);
@@ -30,7 +27,7 @@ export default function MoneyLedger({ user }) {
                 <>
                     <LineContainer>
                         {entries.map((entry, i) => (
-                            <Lines key={i} entries={entry} />
+                            <Line key={i} entries={entry} />
                         ))}
                     </LineContainer>
                     {funds ? <Funds total={funds} /> : ''}

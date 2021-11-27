@@ -10,30 +10,38 @@ import UserContext from '../../contexts/userContext';
 export default function Login() {
     const path = useLocation().pathname;
     const history = useHistory();
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({
+        name: '',
+        email: '',
+        password: '',
+        repeatPassword: '',
+    });
     const [isLoading, setIsLoading] = useState(false);
     const { setUser } = useContext(UserContext);
 
     function handleSubmit(e) {
         e.preventDefault();
         if (path === '/sign-up') {
-            const body = {
-                name: inputs.name,
-                email: inputs.email,
-                password: inputs.password,
-                repeatPassword: inputs.repeatPassword,
-            };
-            setIsLoading(true);
-            const promise = signUp(body);
-            promise
-                .then(() => {
-                    alert('Usuário cadastrado com sucesso');
-                    setIsLoading(false);
-                    history.push('/sign-in');
-                })
-                .catch((err) => {
-                    handleError(err);
-                });
+            if (inputs.password !== inputs.repeatPassword) {
+                alert('As senhas digitadas não são iguais.');
+            } else {
+                const body = {
+                    name: inputs.name,
+                    email: inputs.email,
+                    password: inputs.password,
+                };
+                setIsLoading(true);
+                const promise = signUp(body);
+                promise
+                    .then(() => {
+                        alert('Usuário cadastrado com sucesso');
+                        setIsLoading(false);
+                        history.push('/sign-in');
+                    })
+                    .catch((err) => {
+                        handleError(err);
+                    });
+            }
         } else {
             const body = {
                 email: inputs.email,

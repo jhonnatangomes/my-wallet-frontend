@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Line = styled.div`
+const LineStyle = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -20,4 +20,4 @@ const Value = styled.span`
     color: ${({ positive }) => (positive ? '#03ac00' : '#c70000')};
 `;
 
-export { Line, DateAndDescription, Value };
+export { LineStyle, DateAndDescription, Value };

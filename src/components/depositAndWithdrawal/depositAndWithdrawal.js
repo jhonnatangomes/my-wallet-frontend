@@ -11,31 +11,23 @@ export default function DepositAndWithdrawal() {
     const history = useHistory();
     const [value, setValue] = useState('');
     const [description, setDescription] = useState('');
-    const [decimalPlace, setDecimalPlace] = useState('');
     const { user } = useContext(UserContext);
 
     function handleSubmit(e) {
         e.preventDefault();
+        const formattedValue =
+            path === '/withdrawal'
+                ? '-' + value.replace(',', '.')
+                : value.replace(',', '.');
         const body = {
             description,
-            value: path === '/withdrawal' ? '-' + value : value,
+            value: Number(formattedValue),
         };
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`,
             },
         };
-        if (body.value.includes(',')) {
-            if (!decimalPlace) {
-                body.value = Number(body.value.replace(',', '') + '00');
-            } else if (decimalPlace && decimalPlace.length === 1) {
-                body.value = Number(body.value.replace(',', '') + '0');
-            } else {
-                body.value = Number(body.value.replace(',', ''));
-            }
-        } else {
-            body.value *= 100;
-        }
         const promise = postEntry(body, config);
         promise
             .then(() => {
@@ -50,9 +42,6 @@ export default function DepositAndWithdrawal() {
     function handleValue(e) {
         const matchRegex = e.target.value.match(/^\d+,?(\d{1,2})?$/);
         if (matchRegex || e.target.value === '') {
-            if (matchRegex) {
-                setDecimalPlace(matchRegex[1]);
-            }
             setValue(e.target.value);
         }
     }

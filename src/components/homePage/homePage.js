@@ -35,7 +35,7 @@ export default function HomePage() {
     return (
         <MainContainer>
             <TitleContainer>
-                <Title>Olá, {user.name}</Title>
+                <Title>Olá, {user && user.name}</Title>
                 <img onClick={handleLogout} src={exitIcon} alt="" />
             </TitleContainer>
             <MoneyLedger user={user} />
