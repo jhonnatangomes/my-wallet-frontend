@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Ledger = styled.div`
     width: 100%;
@@ -9,7 +9,7 @@ const Ledger = styled.div`
     margin-bottom: 13px;
     display: flex;
     flex-direction: column;
-    justify-content: ${({ entries }) => (entries ? "none" : "center")};
+    justify-content: ${({ entries }) => (entries ? 'none' : 'center')};
     align-items: center;
     padding: 23px 11px 10px 12px;
     position: relative;
@@ -44,7 +44,7 @@ const FundsStyle = styled.div`
     }
 
     & span:last-child {
-        color: ${({ positive }) => (positive ? "#03ac00" : "#c70000")};
+        color: ${({ positive }) => (positive ? '#03ac00' : '#c70000')};
     }
 `;
 

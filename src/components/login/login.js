@@ -1,37 +1,47 @@
-import { useLocation, useHistory } from "react-router";
-import { useState } from "react";
-import { LoginContainer, Title, Form, Span } from "./loginStyle";
-import { Input, Button } from "../../styles/commonStyles";
-import { Link } from "react-router-dom";
-import { Ellipsis } from "react-spinners-css";
-import { signUp, signIn } from "../../api/api";
+import { useLocation, useHistory } from 'react-router';
+import { useContext, useState } from 'react';
+import { LoginContainer, Title, Form, Span } from './loginStyle';
+import { Input, Button } from '../../styles/commonStyles';
+import { Link } from 'react-router-dom';
+import { Ellipsis } from 'react-spinners-css';
+import { signUp, signIn } from '../../api/api';
+import UserContext from '../../contexts/userContext';
 
 export default function Login() {
     const path = useLocation().pathname;
     const history = useHistory();
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({
+        name: '',
+        email: '',
+        password: '',
+        repeatPassword: '',
+    });
     const [isLoading, setIsLoading] = useState(false);
+    const { setUser } = useContext(UserContext);
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (path === "/sign-up") {
-            const body = {
-                name: inputs.name,
-                email: inputs.email,
-                password: inputs.password,
-                repeatPassword: inputs.repeatPassword,
-            };
-            setIsLoading(true);
-            const promise = signUp(body);
-            promise
-                .then(() => {
-                    alert("Usuário cadastrado com sucesso");
-                    setIsLoading(false);
-                    history.push("/sign-in");
-                })
-                .catch((err) => {
-                    handleError(err);
-                });
+        if (path === '/sign-up') {
+            if (inputs.password !== inputs.repeatPassword) {
+                alert('As senhas digitadas não são iguais.');
+            } else {
+                const body = {
+                    name: inputs.name,
+                    email: inputs.email,
+                    password: inputs.password,
+                };
+                setIsLoading(true);
+                const promise = signUp(body);
+                promise
+                    .then(() => {
+                        alert('Usuário cadastrado com sucesso');
+                        setIsLoading(false);
+                        history.push('/sign-in');
+                    })
+                    .catch((err) => {
+                        handleError(err);
+                    });
+            }
         } else {
             const body = {
                 email: inputs.email,
@@ -42,8 +52,12 @@ export default function Login() {
             promise
                 .then((res) => {
                     setIsLoading(false);
-                    localStorage.setItem("user", JSON.stringify(res.data));
-                    history.push("/");
+                    localStorage.setItem(
+                        'mywallet-user',
+                        JSON.stringify(res.data)
+                    );
+                    setUser(res.data);
+                    history.push('/');
                 })
                 .catch((err) => handleError(err));
         }
@@ -57,7 +71,7 @@ export default function Login() {
         ) {
             alert(err.response.data);
         } else {
-            alert("Algo inesperado aconteceu");
+            alert('Algo inesperado aconteceu');
         }
         setIsLoading(false);
     }
@@ -66,10 +80,10 @@ export default function Login() {
         <LoginContainer>
             <Title path={path}>MyWallet</Title>
             <Form onSubmit={handleSubmit}>
-                {path === "/sign-up" ? (
+                {path === '/sign-up' ? (
                     <Input
                         placeholder="Nome"
-                        value={inputs.name || ""}
+                        value={inputs.name || ''}
                         onChange={(e) =>
                             setInputs({ ...inputs, name: e.target.value })
                         }
@@ -77,12 +91,12 @@ export default function Login() {
                         required
                     />
                 ) : (
-                    ""
+                    ''
                 )}
                 <Input
                     placeholder="E-mail"
                     type="email"
-                    value={inputs.email || ""}
+                    value={inputs.email || ''}
                     onChange={(e) =>
                         setInputs({ ...inputs, email: e.target.value })
                     }
@@ -92,18 +106,18 @@ export default function Login() {
                 <Input
                     placeholder="Senha"
                     type="password"
-                    value={inputs.password || ""}
+                    value={inputs.password || ''}
                     onChange={(e) =>
                         setInputs({ ...inputs, password: e.target.value })
                     }
                     disabled={isLoading}
                     required
                 />
-                {path === "/sign-up" ? (
+                {path === '/sign-up' ? (
                     <Input
                         placeholder="Confirme a senha"
                         type="password"
-                        value={inputs.repeatPassword || ""}
+                        value={inputs.repeatPassword || ''}
                         onChange={(e) =>
                             setInputs({
                                 ...inputs,
@@ -114,20 +128,20 @@ export default function Login() {
                         required
                     />
                 ) : (
-                    ""
+                    ''
                 )}
                 <Button type="submit">
                     {isLoading ? (
                         <Ellipsis color="white" />
-                    ) : path === "/sign-in" ? (
-                        "Entrar"
+                    ) : path === '/sign-in' ? (
+                        'Entrar'
                     ) : (
-                        "Cadastrar"
+                        'Cadastrar'
                     )}
                 </Button>
             </Form>
             <Span path={path}>
-                {path === "/sign-in" ? (
+                {path === '/sign-in' ? (
                     <Link to="/sign-up">Primeira vez? Cadastre-se</Link>
                 ) : (
                     <Link to="/sign-in">Já tem uma conta? Entre agora!</Link>

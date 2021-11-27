@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const TitleContainer = styled.div`
     display: flex;
@@ -27,7 +27,7 @@ const Button = styled.button`
     font-weight: bold;
     font-size: 17px;
     line-height: 19.96px;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     padding: 10px;
     cursor: pointer;
 
